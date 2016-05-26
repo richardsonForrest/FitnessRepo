@@ -1,0 +1,43 @@
+!3 Update the Appian URL (REPLACE_APPIAN_URL), Username (REPLACE_USERNAME), and Password (REPLACE_PASSWORD) below.
+!3 Update the Appian Locale (en_US or en_GB) and Appian Version (7.10, 7.11, or 16.1) if different. 
+
+!*** FitNesse Configurations
+!define TEST_SYSTEM {slim}
+
+!path C:\TESTING_HOME\**.jar
+
+!*** Setup
+Need these before each test case
+!| script | com.appiancorp.ps.automatedtest.fixture.TempoFixture |
+| setup selenium web driver with browser | FIREFOX |
+| set appian url to | sandbox.appian.shamlal.com:8081/suite |
+| set appian version to | 7.10 |
+| set appian locale to | en_US |
+Setup how long test will wait before failing 
+| script |
+| set timeout seconds to | 20 |
+| set stop on error to | false |
+
+Create a random string and new folder to take screensshots for errors
+| script |
+| $rand= | get random string | 4 |
+| set take error screenshots to | true |
+| set screenshot path to | C:\TESTING_HOME\screenshots\$rand\ |
+
+
+!*** Update Variables/Initial Login information
+| script | 
+| login with username | forrest.richardson | and password | b |
+| click on menu | Actions| 
+| verify action | Create An Investigation| is not present |
+| click on action | Open An Investigation| 
+| populate field | Investigation Number| with |$rand| 
+| populate field | Case Information| with |Test Case Information data| 
+| select grid | Select Subjects | row | 1 |
+| click on button |Submit| 
+
+
+
+
+
+*!
